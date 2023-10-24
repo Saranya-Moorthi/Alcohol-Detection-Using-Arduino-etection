@@ -1,0 +1,32 @@
+﻿int alcoholSensorPin = A0;
+int digitalOutPin = 7;
+int buzzerPin = 8;
+
+void setup() {
+  pinMode(digitalOutPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int alcoholValue = analogRead(alcoholSensorPin);
+  int digitalValue = digitalRead(digitalOutPin);
+
+  // Print the alcohol sensor value to the serial monitor
+  Serial.print("Analog Value: ");
+  Serial.println(alcoholValue);
+
+  // Check if alcohol is detected
+  if (digitalValue == LOW) {
+    Serial.println("Alcohol detected!");
+
+    // Activate the buzzer
+    tone(buzzerPin, 1000);  // You can adjust the frequency as needed
+    delay(1000);  // Buzzer sounds for 1 second
+    noTone(buzzerPin);
+  } else {
+    noTone(buzzerPin);
+  }
+
+  delay(1000);  // Delay for 1 second before the next reading
+}
